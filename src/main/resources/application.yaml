@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: spring-kotlin-accelerator
+  profiles:
+    active: ${ACTIVE_PROFILE:local}
+  reactor:
+    context-propagation: auto
+  #  Active by default by Spring GraphQl starter when enabled is set
+  #  Test virtual threads
+  threads:
+    virtual:
+      enabled: true
+# Set up only one token issuer server, needs to enable OAuth2ResourceServerSecurityConfiguration jwt configuration
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          # Example static issuer URI configuration (can be used for known issuers)
+#          issuer-uri: ${JWT_ISSUER_URI} # Placeholder for dynamic issuer URI
+
+logging:
+  pattern:
+    console: "%boldGreen(%d{yy-MM-dd}) %boldGreen(%d{HH:mm:ss.SSS}) | %boldMagenta(%-15.15mdc{traceId} %-15.15mdc{spanId} %-15.15mdc{thread}) | %highlight(%-5.5level) | %-15.15logger{15} | %boldCyan(%-10.10mdc{folder}) | %m%n"
+
+server:
+  port: ${SERVER_PORT:8080}
