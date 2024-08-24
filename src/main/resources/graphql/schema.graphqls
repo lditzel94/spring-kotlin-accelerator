@@ -1,0 +1,8 @@
+type Record {
+    id: ID,
+    data: String
+}
+
+type Query {
+    getRecords:[Record]
+}
