@@ -10,7 +10,7 @@ data class Domain(
     companion object : CompanionLogger() {
         operator fun invoke() =
             Domain(id = UUID.randomUUID(), data = "")
-                .log { info("Domain object provided", it) }
+                .log { info("Domain object provided {}", it) }
     }
 
 }
