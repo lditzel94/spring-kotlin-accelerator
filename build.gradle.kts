@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
@@ -5,7 +7,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
 }
 
-group = "dev.luciano"
+group = "dev.ditzel"
 version = "1.0.0"
 
 object Versions {
@@ -30,24 +32,24 @@ dependencyManagement {
 }
 
 dependencies {
-//    SPRING
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    implementation("org.springframework.security:spring-security-oauth2-jose")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springframework.boot:spring-boot-starter-graphql")
-
-//    JACKSON
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-//    SWAGGER
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${Versions.OPEN_API_VERSION}")
-
 //    KOTLIN
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
+//    WEB
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-graphql")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${Versions.OPEN_API_VERSION}")
+
+//    OBSERVABILITY
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+//     SECURITY
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
 
 //    ARROW
     implementation("io.arrow-kt:arrow-core")
@@ -74,4 +76,11 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "21"
+    }
 }
