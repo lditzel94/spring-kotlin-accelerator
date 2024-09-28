@@ -1,0 +1,8 @@
+services:
+  backend:
+    build: .
+    container_name: kotlin-accelerator
+    ports:
+      - "8080:8080"
+    environment:
+      - ACTIVE_PROFILE=local
