@@ -10,15 +10,7 @@ abstract class CompanionLogger {
     private val log: Logger by lazy { Loggers.getLogger(javaClass.enclosingClass) }
     private val folder: String by lazy { javaClass.enclosingClass.packageName.substringAfterLast('.').uppercase() }
 
-    protected suspend fun <T> T.suspendLog(block: suspend Logger.(T) -> Unit): T =
-        also {
-            MDC.put("folder", folder)
-            MDC.put("thread", Thread.currentThread().toString())
-            block(log, this)
-            MDC.remove("folder")
-        }
-
-    protected fun <T> T.log(block: Logger.(T) -> Unit): T =
+    protected suspend fun <T> T.log(block: suspend Logger.(T) -> Unit): T =
         also {
             MDC.put("folder", folder)
             MDC.put("thread", Thread.currentThread().toString())
@@ -28,12 +20,12 @@ abstract class CompanionLogger {
 
     protected suspend fun <L, R> Either<L, R>.logRight(right: suspend Logger.(R) -> Unit): Either<L, R> =
         also {
-            fold({}, { r -> suspendLog { right(r) } })
+            fold({}, { r -> log { right(r) } })
         }
 
     protected suspend fun <L, R> Either<L, R>.logLeft(left: suspend Logger.(L) -> Unit): Either<L, R> =
         also {
-            fold({ l -> suspendLog { left(l) } }, { })
+            fold({ l -> log { left(l) } }, { })
         }
 
     protected suspend fun <L, R> Either<L, R>.logEither(
@@ -41,6 +33,6 @@ abstract class CompanionLogger {
         right: suspend Logger.(R) -> Unit,
     ): Either<L, R> =
         also {
-            fold({ l -> suspendLog { left(l) } }, { r -> suspendLog { right(r) } })
+            fold({ l -> log { left(l) } }, { r -> log { right(r) } })
         }
 }
