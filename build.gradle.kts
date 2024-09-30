@@ -7,7 +7,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
 }
 
-group = "dev.ditzel"
+group = "dev.luciano"
 version = "1.0.0"
 
 object Versions {
@@ -44,6 +44,10 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${Versions.OPEN_API_VERSION}")
 
+//    DATABASE
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    implementation("org.postgresql:r2dbc-postgresql")
+
 //    OBSERVABILITY
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
@@ -57,6 +61,7 @@ dependencies {
 
 //    TOOLS
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
 //    TEST
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -83,4 +88,10 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "21"
     }
+}
+
+tasks.register<Exec>("composeDown") {
+    description = "Runs docker compose down command removing volumes"
+    group = "docker"
+    commandLine = listOf("docker", "compose", "down", "-v")
 }

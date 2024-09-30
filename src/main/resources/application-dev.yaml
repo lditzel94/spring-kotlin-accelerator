@@ -19,3 +19,11 @@ oauth:
       - "https://login.microsoftonline.com/${AZURE_AD_TENANT_ID:cc25bc2e-b3cb-4d85-ad7c-33745bf2a224}/v2.0"
       #      - "https://cognito-idp.${COGNITO_REGION:us-east-1}.amazonaws.com/${COGNITO_USER_POOL_ID:us-east-1_abcdefg}"
       - "https://accounts.google.com"
+
+# Set up only one token issuer server, needs to enable OAuth2ResourceServerSecurityConfiguration jwt configuration
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          # Example static issuer URI configuration (can be used for known issuers)
+#          issuer-uri: ${JWT_ISSUER_URI} # Placeholder for dynamic issuer URI

@@ -1,18 +1,19 @@
-package dev.luciano.accelerator.adapter.web.graphql
+package dev.luciano.accelerator.adapter.web.rest
 
 import dev.luciano.accelerator.domain.DomainModel
 import dev.luciano.accelerator.domain.DomainRepository
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.graphql.data.method.annotation.QueryMapping
-import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
-
-@Controller
-class GraphQlAdapter(
-    @Qualifier("coroutine_r2dbc_repository")
+@RestController
+@RequestMapping("/reactive")
+class ReactiveRestAdapter(
+    @Qualifier("reactive_r2dbc_repository")
     private val repository: DomainRepository,
 ) {
-    @QueryMapping
+    @GetMapping
     suspend fun getRecords(): List<DomainModel> =
         repository.findAll()
             .fold(

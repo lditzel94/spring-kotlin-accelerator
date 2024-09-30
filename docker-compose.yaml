@@ -1,8 +1,38 @@
 services:
-  backend:
-    build: .
-    container_name: kotlin-accelerator
-    ports:
-      - "8080:8080"
+#  backend:
+#    build: .
+#    container_name: kotlin-accelerator
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - ACTIVE_PROFILE=local
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=secret
+#      - POSTGRES_DB=spring_kotlin
+#
+#    depends_on:
+#      - postgres
+#    networks:
+#      - kotlin-accelerator
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
     environment:
-      - ACTIVE_PROFILE=local
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: spring_kotlin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/main/resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - kotlin-accelerator
+
+volumes:
+  postgres_data:
+
+networks:
+  kotlin-accelerator:
+    driver: bridge
