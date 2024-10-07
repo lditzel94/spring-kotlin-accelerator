@@ -24,7 +24,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom("io.arrow-kt:arrow-stack:${libs.versions.arrow.get()}")
+        mavenBom(libs.arrow.bom.get().toString())
     }
 }
 

@@ -104,6 +104,7 @@ dependencyResolutionManagement {
             ).withoutVersion()
             library("spring-security-oauth2-jose", "org.springframework.security", "spring-security-oauth2-jose").withoutVersion()
 
+            library("arrow-bom", "io.arrow-kt", "arrow-stack").versionRef("arrow")
             library("arrow-core", "io.arrow-kt", "arrow-core").withoutVersion()
             library("arrow-fx-coroutines", "io.arrow-kt", "arrow-fx-coroutines").withoutVersion()
 
